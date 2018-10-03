@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TinyApp - Welcome!</title>
+</head>
+<body style="font-size:20px; padding:0 50px 0 50px;">
+    <header>
+            <% include ../views/partials/_header %>
+    </header>
+    <h2>Below is a list of Tiny URLS</h2>
+    <ul>
+        <% for(let shortURL in urlDatabase) { %>
+            <li style="display: block; margin-bottom: 20px;">
+                <a href="/urls/<%= shortURL %>"><%= shortURL %></a> - <a href="<%= urlDatabase[shortURL] %>"><%= urlDatabase[shortURL] %></a>
+                <form style="display: inline-block;"  method="POST" action="/urls/<%= shortURL %>/delete">
+                    <button style="margin-left: 10px;" type="submit">Delete</button>
+                </form>
+        </li>
+        <% }; %>
+    </ul>
+    <a href="/urls/new" style="display: block; margin: 40px 0 20px 0;">Tiny a new URL</a>
+    
+</body>
+</html>
