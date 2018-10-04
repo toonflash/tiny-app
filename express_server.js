@@ -1,15 +1,23 @@
 var express = require("express");
+var cookieParser = require('cookie-parser');
 var app = express();
 var PORT = 8080;
 const bodyParser = require("body-parser");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 var urlDatabase = {
     "b2xVn2": "http://www.lighthouselabs.ca",
     "9sm5xK": "http://www.google.com"
 };
+
+
+app.get("/urls.jason", (req, res) => {
+    res.json(urlDatabase);
+});
+
 
 // only one method type for each route you set
 app.get("/", (req, res) => {
@@ -19,12 +27,17 @@ app.get("/", (req, res) => {
 // get all the urls
 app.get("/urls", (req, res) => {
     // render the urlDatabase object data on the index page
-    res.render("urls_index", {urlDatabase: urlDatabase});
+    let templateVars = { 
+        urlDatabase: urlDatabase,
+        username: req.cookies["username"]
+    };
+    res.render("urls_index", templateVars);
 });
 
 // set us up to create a new one - it's GET becasue we're getting the "paperwork" to fill out
 app.get("/urls/new", (req, res) => {
-    res.render("urls_new");
+    let templateVars = {username: req.cookies["username"]};
+    res.render("urls_new", templateVars);
 });
 
 // this route is for once we have filled out peperwork to create a URL
@@ -36,16 +49,14 @@ app.post("/urls", (req, res) => {
     res.redirect('/urls');
 });
 
-
 app.get("/urls/:id", (req, res) => {
     let shortURL = req.params.id;
     let longURL = urlDatabase[shortURL]
-
     let templateVars = {
         shortURL: shortURL,
-        longURL: longURL
+        longURL: longURL,
+        username: req.cookies["username"]
     };
-
     res.render("urls_show", templateVars);
 });
 
@@ -54,7 +65,6 @@ app.post("/urls/:shortURL/update", (req, res) => {
     let newURL = req.body.update;
     // update the correct param name (here it's :shortURL) in order to update
     urlDatabase[req.params.shortURL] = newURL
-
     res.redirect('/urls');
 });
 
@@ -66,6 +76,22 @@ app.get("/u/:shortURL", (req, res) => {
 app.post("/urls/:id/delete", (req, res) => {
     // Delete the id from the urlDatabase object
     delete urlDatabase[req.params.id];
+    res.redirect('/urls');
+});
+
+app.post("/login", (req, res) => {
+    // Set username input into the form
+    let userName = req.body.username;
+    // add username to cookies
+    res.cookie('username', userName);
+    res.redirect('/urls');
+});
+
+app.post("/logout", (req, res) => {
+    // username that's in the cookie
+    let userName = req.body.username;
+    // clear cookies
+    res.clearCookie('username', userName);
     res.redirect('/urls');
 });
 
@@ -81,10 +107,4 @@ function generateRandomString() {
     }
     return randomString;
 }
-
-// for when we handle errors
-// if (req.params.id == undefined || req.params.shortURL == undefined) {
-//     console.log("Please make sure you are entering a url and try again.");
-// return false;
-// };
 
