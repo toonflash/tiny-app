@@ -1,1 +1,14 @@
 <h1>Tiny App</h1>
+
+<% if(username){ %>
+    <p style="display: inline-block; margin: 0 10px 0 0;">You are logged in as: <strong><%= username %></strong></p>
+    <form style="display: inline-block; margin: 10px 0 10px;" method="POST" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
+<% } else { %>
+    <form method="POST" action="/login" style="margin-bottom: 40px;">
+        <label for="username"><strong>Login: </strong></label>
+        <input id="username" type="text" name="username">
+        <button type="submit">Submit</button>
+    </form>
+<% } %>

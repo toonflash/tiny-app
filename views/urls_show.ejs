@@ -10,7 +10,7 @@
     <header>
             <% include ../views/partials/_header %>
     </header>
-    <form method="POST" action="/urls/<%= shortURL %>/update">
+    <form method="POST" action="/urls/<%= shortURL %>/update" style="margin-top: 20px;">
         <label for="update" style="margin-right: 20px;">ShortURL: <strong><%= shortURL %></strong></label>
         <input id="update" type="text" name="update">
         <button type="submit">Update</button>
