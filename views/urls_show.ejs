@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TinyApp - Welcome!</title>
+    <title>TinyApp - Short URL</title>
 </head>
 <body style="font-size:20px; padding:0 50px 0 50px;">
     <header>
-            <% include ../views/partials/_header %>
+        <% include ../views/partials/_header %>
     </header>
     <% if(!user){ %>
         <p>Please log in to view short URLs.</p>
     <% }; %>
+
     <% if(user){ %>
     <form method="POST" action="/urls/<%= shortURL %>/update" style="margin-top: 20px;">
         <label for="update" style="margin-right: 20px;">ShortURL: <strong><%= shortURL %></strong></label>
-        <input id="update" type="text" name="update">
+        <input id="update" type="text" name="longURL">
         <button type="submit">Update</button>
     </form>
     <% }; %>

@@ -3,7 +3,7 @@
 <% if(user){ %>
     <p style="display: inline-block; margin: 0 10px 0 0;">You are logged in as: <strong><%= user.email %></strong></p>
     <form style="display: inline-block; margin: 10px 0 10px;" method="POST" action="/logout">
-    <button type="submit">Logout</button>
+        <button type="submit">Logout</button>
     </form>
 <% } else { %>
     <a href="/login">Login</a>
