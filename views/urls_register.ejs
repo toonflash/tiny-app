@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TinyApp - Register</title>
+</head>
+<header>
+    <a href="/urls"><h1>Tiny App</h1></a>
+</header>
+<body style="font-size:20px; padding:0 50px 0 50px;">
+    <h2>Register as a new user</h2>
+    <form action="/register" method="POST">
+        <p>
+            <label for="email">Enter your email:</label>
+            <input id="email" type="email" name="email" placeholder="email" style="width: 300px">
+        </p>
+        <p>
+            <label for="password">Create a password:</label>
+            <input id="password" type="password" name="password" placeholder="password" style="width: 300px">
+        </p>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

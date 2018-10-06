@@ -12,13 +12,24 @@
     </header>
     <h2>Below is a list of Tiny URLS</h2>
     <ul>
-        <% for(let shortURL in urlDatabase) { %>
+        <% if(!user){ %>
+            <p>Please log into see a list of tiny urls</p>
+        <% }; %>
+
+        <!-- <p><%= JSON.stringify(urlDatabase) %></p> -->
+
+        <% if(user){ %>
+        <% for(let key in urlDatabase) { %>
             <li style="display: block; margin-bottom: 20px;">
-                <a href="/urls/<%= shortURL %>"><%= shortURL %></a> - <a href="<%= urlDatabase[shortURL] %>"><%= urlDatabase[shortURL] %></a>
-                <form style="display: inline-block;"  method="POST" action="/urls/<%= shortURL %>/delete">
-                    <button style="margin-left: 10px;" type="submit">Delete</button>
+                <%= urlDatabase[key].shortURL %> - <a href="<%= urlDatabase[key].longURL %>"><%= urlDatabase[key].longURL %></a>
+                <form style="display: inline-block;"  method="POST" action="/urls/<%= urlDatabase[key].shortURL %>/delete">
+                    <% if(user){ %>
+                        <a href="/urls/<%= urlDatabase[key].shortURL %>">Edit</a>
+                        <button style="margin-left: 10px;" type="submit">Delete</button>
+                    <% } %>
                 </form>
         </li>
+        <% }; %>
         <% }; %>
     </ul>
     
